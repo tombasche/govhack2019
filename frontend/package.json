@@ -11,7 +11,8 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "2.1.1",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "victory": "^33.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

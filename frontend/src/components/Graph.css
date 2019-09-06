@@ -1,0 +1,12 @@
+.chart {
+    padding: 1em 1em 1em 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
+
+.chart-label {
+    font-size: 0.8em;
+
+}

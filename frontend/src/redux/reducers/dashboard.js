@@ -1,10 +1,10 @@
-import * as actions from "../actions/actions";
+import * as actions from "../actions/dashboard";
 
 const appInitialState = {
   data: null,
 };
 
-const basicReducer = (state = appInitialState, action) => {
+const dashboardReducer = (state = appInitialState, action) => {
   switch (action.type) {
     case "RESET_STORE":
       return {
@@ -22,4 +22,4 @@ const basicReducer = (state = appInitialState, action) => {
   }
 };
 
-export default basicReducer;
+export default dashboardReducer;
