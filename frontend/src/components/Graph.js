@@ -54,6 +54,8 @@ export class Graph extends Component {
             <div className="chart">
                 <VictoryChart
                     theme={VictoryTheme.material}
+                    width={1000}
+                    height={600}
                 >
                     <VictoryLine
                         style={{
