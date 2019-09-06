@@ -55,7 +55,7 @@ export default class ControlSlider extends Component {
         return (
             <Slider
                 rootStyle={sliderStyle}
-                domain={[-1, 1]}
+                domain={this.props.domain}
                 step={0.01}
                 mode={2}
                 values={[this.props.value]}
