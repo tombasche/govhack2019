@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import './Dashboard.css';
 import Loading from "../components/Loading";
 import {Graph} from "../components/Graph";
+import ControlSlider from "../components/ControlSlider";
 
 const mapStateToProps = state => ({
     dashboard: state.dashboard,
@@ -18,6 +19,27 @@ const mapDispatchToProps = dispatch => {
         dashboardActions: bindActionCreators(dashboardActions, dispatch)
     };
 };
+
+let fakeAirData = [
+    {x: 1567720826, y: 0.5},
+    {x: 1567730826, y: 0.9},
+    {x: 1567740826, y: 0.2},
+    {x: 1567750826, y: 0.4},
+    {x: 1567760826, y: 0.5},
+    {x: 1567770826, y: 0.1},
+];
+let resetAirData = fakeAirData;
+
+
+let fakeTrafficData = [
+    {x: 1567720826, y: 4},
+    {x: 1567730826, y: 5},
+    {x: 1567740826, y: 2},
+    {x: 1567750826, y: 1},
+    {x: 1567760826, y: 2.5},
+    {x: 1567770826, y: 3.4},
+];
+let resetTrafficData = fakeTrafficData;
 
 class Dashboard extends Component {
 
@@ -50,7 +72,11 @@ class Dashboard extends Component {
             <div className="dashboard">
                 <Header />
                         <div className="right-now-container">
-                            <Graph />
+                            <Graph
+                                label="Data"
+                                airData={fakeAirData}
+                                trafficData={fakeTrafficData}
+                            />
                         </div>
             </div>
         );

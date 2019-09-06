@@ -1,87 +1,83 @@
 import React, {Component} from 'react';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from 'victory';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme, VictoryLine } from 'victory';
 
 import './Graph.css';
-
-const fakeAirData = [
-
-];
-
-const fakeTrafficData = [
-
-];
+import ControlSlider from "./ControlSlider";
+import Button from "./Button";
 
 
 export class Graph extends Component {
 
-    render() {
-        let domain = {};
-        if(this.props.myData > 0) {
-            domain = {
-                y: [this.props.myData, 0]
-            }
-        } else {
-            domain = {
-                y: [0, this.props.myData]
+    constructor(props) {
+        super(props);
+        this.state = {
+            airData: this.props.airData,
+            trafficData: this.props.trafficData,
+            sliders: {
+                sliderAir: 0
             }
         }
 
+    }
+    updateDataSet = (e, dataset, datasetName) => {
+        let val = e[0]
+        for (let i in dataset) {
+            let set = dataset[i];
+            set.y *= (val * 0.01);
+            dataset[i].y = set.y
+        }
+        this.setState({
+            sliders: {
+                sliderAir: val
+            },
+            [datasetName]: dataset
+        })
+    };
+
+    updateSets = (e) => {
+        // this.updateDataSet(e, this.props.airData, 'airData')
+        this.updateDataSet(e, this.props.trafficData, 'trafficData')
+    };
+
+    resetData = (e) => {
+        e.preventDefault();
+        this.setState({
+            ...this.state,
+            sliders: {
+              sliderAir: 0
+            }
+        })
+    };
+
+    render() {
         return (
             <div className="chart">
                 <VictoryChart
-                    domainPadding={{x: [40, 40]}}
                     theme={VictoryTheme.material}
-                    padding={{top: 50, right: 50, left: 100, bottom: 50}}
-                    width={240}
-                    height={250}
-                    labels={['', '']}
                 >
-                    <VictoryAxis
-                        tickFormat={() => ''}
-
-                    />
-                    <VictoryAxis
-                        dependentAxis
-                        tickValues={this.props.range}
-                    />
-                    <VictoryBar
-                        data={[{label: '1', value: this.props.myData}]}
-                        labels={['', '']}
-                        domain={myDomain}
-                        x="label"
-                        y="value"
-                        labelComponent={<g/>}
+                    <VictoryLine
                         style={{
-                            data: {
-                                fill: '#9de3a7'
-                            }
+                            data: { stroke: "#c43a31" },
+                            parent: { border: "1px solid #ccc"}
                         }}
-                        animate={{
-                            duration: 1000,
-                            onLoad: { duration: 1000 }
-                        }}
-                        barWidth={30}
+                        data={this.state.airData}
                     />
-                    <VictoryBar
-                        data={[{label: '2', value: this.props.theirData}]}
-                        labels={['', '']}
-                        domain={theirDomain}
-                        x="label"
-                        y="value"
-                        labelComponent={<g/>}
+                    <VictoryLine
                         style={{
-                            data: {
-                                fill: '#cfdde3'
-                            }
+                            data: { stroke: "blue" },
+                            parent: { border: "1px solid #ccc"}
                         }}
-                        animate={{
-                            duration: 1000,
-                            onLoad: { duration: 1000 }
-                        }}
-                        barWidth={30}
+                        data={this.state.trafficData}
                     />
                 </VictoryChart>
-                <span className="chart-label">{this.props.label} ({this.props.unit})</span>
+                <ControlSlider
+                    updateSlider={(e) => this.updateSets(e)}
+                    value={this.state.sliders.sliderAir}
+                />
+                <Button
+                    label={"Reset"}
+                    onClick={this.resetData}
+                />
             </div>
         );
     }
