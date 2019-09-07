@@ -1,0 +1,42 @@
+.App-logo {
+  height: 5em;
+  margin-left: -1em; /* whitespace in logo image */
+}
+
+.App-header {
+  background-color: #222;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  width: 100%;
+}
+
+.App-title {
+  font-weight: 100;
+  font-size: 36px;
+  position: absolute;
+  top: 0.4em;
+  font-family: 'Raleway', sans-serif;
+  padding: 1em 0 1em 0;
+}
+
+.Postcode {
+  font-weight: 100;
+  font-size: 36px;
+  font-family: 'Raleway', sans-serif;
+  padding: 1em 0 1em 0;
+}
+
+.header-container {
+  width: 1200px;
+  display: flex;
+  height: 6em;
+  justify-content: space-between;
+  padding-top: 1em;
+  flex-flow: wrap;
+}
+
+.your {
+  color: #9de3a7;
+}

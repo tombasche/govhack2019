@@ -1,0 +1,16 @@
+.chart {
+    /*padding: 1em 1em 1em 2em;*/
+    display: flex;
+    flex-direction: column;
+}
+
+.sliders {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.chart-label {
+    font-size: 0.8em;
+}
