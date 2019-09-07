@@ -6,9 +6,7 @@ import * as dashboardActions from '../redux/actions/dashboard';
 import { connect } from 'react-redux';
 
 import './Dashboard.css';
-import Loading from "../components/Loading";
 import {Graph} from "../components/Graph";
-import ControlSlider from "../components/ControlSlider";
 
 const mapStateToProps = state => ({
     dashboard: state.dashboard,
@@ -20,26 +18,46 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-let fakeAirData = [
-    {x: 1567720826, y: 0.5},
-    {x: 1567730826, y: 0.9},
-    {x: 1567740826, y: 0.2},
-    {x: 1567750826, y: 0.4},
-    {x: 1567760826, y: 0.5},
-    {x: 1567770826, y: 0.1},
-];
-let resetAirData = fakeAirData;
+let fakeAirData = {
+    "actual": [
+        {x: "Apr 2019", y: 25},
+        {x: "May 2019", y: 26},
+        {x: "Jun 2019", y: 30},
+        {x: "Jul 2019", y: 34},
+        {x: "Aug 2019", y: 36},
+        {x: "Sept 2019", y: 40},
+        {x: "Oct 2019", y: 42},
+    ],
+    "predicted": [
+        {x: "Oct 2019", y: 42},
+        {x: "Nov 2019", y: 43},
+        {x: "Dec 2019", y: 44},
+        {x: "Jan 2020", y: 46},
+        {x: "Feb 2020", y: 47},
+        {x: "March 2020", y: 50},
+    ]
 
+};
 
-let fakeTrafficData = [
-    {x: 1567720826, y: 4},
-    {x: 1567730826, y: 5},
-    {x: 1567740826, y: 2},
-    {x: 1567750826, y: 1},
-    {x: 1567760826, y: 2.5},
-    {x: 1567770826, y: 3.4},
-];
-let resetTrafficData = fakeTrafficData;
+// let fakeTrafficData = {
+//     "actual": [
+//         {x: 1567720826, y: 0.5},
+//         {x: 1567730826, y: 0.9},
+//         {x: 1567740826, y: 0.2},
+//         {x: 1567750826, y: 0.4},
+//         {x: 1567760826, y: 0.5},
+//         {x: 1567770826, y: 0.1},
+//     ],
+//     "predicted": [
+//         {x: 1567720826, y: 0.5},
+//         {x: 1567730826, y: 0.9},
+//         {x: 1567740826, y: 0.2},
+//         {x: 1567750826, y: 0.4},
+//         {x: 1567760826, y: 0.5},
+//         {x: 1567770826, y: 0.1},
+//     ]
+//
+// };
 
 class Dashboard extends Component {
 
@@ -49,22 +67,6 @@ class Dashboard extends Component {
         }
     }
 
-    // fetchNow = () => {
-    //     this.props.dashboardActions.fetchNowData(userKey);
-    // };
-    //
-    // fetchToday = () => {
-    //     this.props.dashboardActions.fetchDailyData(userKey);
-    // };
-
-    componentDidMount() {
-        // fetch the users, and default them to sort by solar generation
-        // this.props.dashboardActions.fetchData(userKey);
-        // this.props.dashboardActions.fetchDailyData(userKey);
-        // this.fetchNow();
-        // this.refreshInterval = setInterval(this.fetchNow, 20000);
-        // this.refreshInterval = setInterval(this.fetchToday, 120000);
-    }
 
     render() {
         // const dashboard = this.props.dashboard.data;
@@ -74,8 +76,9 @@ class Dashboard extends Component {
                         <div className="right-now-container">
                             <Graph
                                 label="Data"
+                                defaultAir={40}
                                 airData={fakeAirData}
-                                trafficData={fakeTrafficData}
+                                trafficData={[]}
                             />
                         </div>
             </div>
