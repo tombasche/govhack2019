@@ -1,117 +1,96 @@
 import React, {Component} from 'react';
 import { VictoryChart, VictoryTheme, VictoryLine } from 'victory';
+import CanvasDraw from 'react-canvas-draw';
 
 import './Graph.css';
-import ControlSlider from "./ControlSlider";
-import Button from "./Button";
 
+const axios = require('axios');
 
 export class Graph extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            airData: this.props.airData,
-            trafficData: this.props.trafficData,
-            sliders: {
-                sliderAir: this.props.defaultAir
-            }
+            data: []
         }
     }
 
-    updatePrediction = (e, dataset) => {
-        let val = e[0];
-        for (let i in dataset) {
-            let set = dataset[i];
-            set.y *= val;
-            dataset[i].y = set.y
+    resetData = (e, canvas) => {
+        e.preventDefault();
+        canvas.clear();
+        this.setState({
+            data: []
+        })
+    };
+
+    sendData = (data) => {
+
+        let yValues = [];
+        for (let i in data) {
+            yValues.push(Math.abs(parseInt(data[i].y)));
+            data[i].y *= -1
+        }
+        let maxValue = Math.max(...yValues)
+        for (let i in data) {
+            data[i].y += maxValue
         }
         this.setState({
-            ...this.state,
-            sliders: {
-                sliderAir: val
-            },
-            airData: {
-                predicted: dataset,
-            },
+            data
         })
-    };
-
-    updateSets = (e) => {
-        // this.updateDataSet(e, this.props.airData, 'airData')
-        this.updatePrediction(e, this.props.airData.predicted)
-    };
-
-    resetData = (e) => {
-        e.preventDefault();
-        this.setState({
-            ...this.state,
-            sliders: {
-              sliderAir: this.props.defaultAir
-            }
-        })
+        // axios.post('/user', {
+        //     firstName: 'Fred',
+        //     lastName: 'Flintstone'
+        // })
+        // .then(function (response) {
+        //     this.setState({
+        //
+        //     })
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
     };
 
     render() {
+        console.log(this.state.data)
         return (
             <div className="chart">
-                <div className="sliders">
+                <div className="canvas-container">
 
-                    <ControlSlider
-                        updateSlider={(e) => this.updateSets(e)}
-                        value={this.state.sliders.sliderAir}
+                    <CanvasDraw
+                        ref={canvasDraw => (this.saveableCanvas = canvasDraw)}
+                        brushColor={'black'}
+                        brushRadius={5}
+                        canvasWidth={400}
+                        canvasHeight={400}
                     />
-                    <ControlSlider
-                        // updateSlider={(e) => this.updateSets(e)}
-                        value={25}
-                    />
-                    <ControlSlider
-                        // updateSlider={(e) => this.updateSets(e)}
-                        value={50}
-                    />
+                    <div className="button-container">
+                        <button className="savebutton"
+                                onClick={() => {
+                                    this.sendData(JSON.parse(this.saveableCanvas.getSaveData()).lines[0].points)
+                                }}
+                        >
+                            Save
+                        </button>
+                        <button className="clearbutton" onClick={(e) => {this.resetData(e, this.saveableCanvas)}}>
+                            Clear
+                        </button>
+                    </div>
                 </div>
                 <VictoryChart
                     theme={VictoryTheme.material}
-                    width={1000}
+                    width={600}
                     height={600}
-                    animate={{duration: 2000}}
+                    animate={{duration: 500}}
                 >
                     <VictoryLine
                         style={{
                             data: { stroke: "#c43a31" },
                             parent: { border: "1px solid #ccc"}
                         }}
-                        data={this.state.airData.actual}
+                        data={this.state.data}
                     />
-                    <VictoryLine
-                        style={{
-                            data: { strokeDasharray: "3, 2", stroke: "#c43a31" },
-                            parent: { border: "1px dotted #ccc"}
-                        }}
-                        data={this.state.airData.predicted}
-                    />
-
-                    {/*<VictoryLine*/}
-                    {/*    style={{*/}
-                    {/*        data: { stroke: "blue" },*/}
-                    {/*        parent: { border: "1px solid #ccc"}*/}
-                    {/*    }}*/}
-                    {/*    data={this.state.trafficData.actual}*/}
-                    {/*/>*/}
-                    {/*<VictoryLine*/}
-                    {/*    style={{*/}
-                    {/*        data: { stroke: "blue" },*/}
-                    {/*        parent: { border: "1px dotted #ccc"}*/}
-                    {/*    }}*/}
-                    {/*    data={this.state.trafficData.predicted}*/}
-                    {/*/>*/}
                 </VictoryChart>
-
-                <Button
-                    label={"Reset"}
-                    onClick={this.resetData}
-                    domain={[0, 100]}
-                />
             </div>
         );
     }

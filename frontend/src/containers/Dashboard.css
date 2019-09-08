@@ -6,85 +6,11 @@
 }
 
 .right-now-container {
-  border: 1px solid #a4a4a4;
+  width: 95%;
   padding: 15px;
   display: flex;
   flex-direction: column;
   justify-items: center;
   align-items: center;
-  margin: 1em;
-  border-radius: 15px;
-  box-shadow: 3px 3px 6px #c5c5c5;
-}
-
-.right-now {
-  font-size: 1.8em;
-}
-
-.board-wrapper {
-  justify-items: center;
-  align-items: center;
-  padding-top: 5em;
-  display: flex;
-  flex-direction: column;
-}
-
-.average-heading {
-  font-size: 1.8em
-}
-
-.cards {
-  display: flex;
-  flex-direction: row;
-}
-
-.section {
-  border: 1px solid #a4a4a4;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-items: center;
-  margin: 1em;
-  border-radius: 15px;
-  box-shadow: 3px 3px 6px #c5c5c5;
-}
-
-.score-n-dotpoints {
-  display: flex;
-  flex-direction: row;
-}
-
-.who-header {
-  font-size: 1.1em;
-  width: 100%;
-  padding-bottom: 8px;
-  border-bottom: 1px solid;
-}
-
-.graph {
-  display: flex;
-  flex-direction: row;
-}
-
-.lower-score-section {
-  background-image: linear-gradient(to top right, rgba(182, 231, 255, 0.28), rgba(149, 194, 218, 0.28));
-
-}
-
-.higher-score-section {
-  background-image: linear-gradient(to top right, rgba(102, 254, 142, 0.14), rgba(99, 205, 102, 0.14));
-
-}
-
-.text-container {
-  display: flex;
-  flex-direction: row;
-}
-
-.graph-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  margin: 0.5em;
 }

@@ -1,16 +1,41 @@
 .chart {
     /*padding: 1em 1em 1em 2em;*/
     display: flex;
-    flex-direction: column;
-}
-
-.sliders {
-    display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
 }
 
 .chart-label {
     font-size: 0.8em;
+}
+
+button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+}
+
+.savebutton {
+    background-color: #4CAF50; /* Green */
+}
+
+.clearbutton {
+    background-color: #FF6655; /* red */
+
+}
+
+.canvas-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
 }
