@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { VictoryChart, VictoryTheme, VictoryLine } from 'victory';
+import { VictoryChart, VictoryTheme, VictoryLine, VictoryAxis, } from 'victory';
 import CanvasDraw from 'react-canvas-draw';
 
 import './Graph.css';
@@ -11,7 +11,11 @@ export class Graph extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            data: {
+                air: [],
+                employment: [],
+                birth: []
+            },
             metric: 'air'
         }
     }
@@ -20,7 +24,11 @@ export class Graph extends Component {
         e.preventDefault();
         canvas.clear();
         this.setState({
-            data: [],
+            data: {
+                air: [],
+                employment: [],
+                birth: []
+            },
             metric: 'air'
         })
     };
@@ -41,9 +49,13 @@ export class Graph extends Component {
             metric: this.state.metric
         })
         .then((response) => {
-            // console.log(response)
+            console.log(response)
             this.setState({
-                data: response.data
+                data: {
+                    air: response.data["Air Quality"],
+                    employment: response.data["Employment"],
+                    birth: response.data["Birth"],
+                }
             })
         })
         .catch((error) => {
@@ -94,13 +106,29 @@ export class Graph extends Component {
                         width={600}
                         height={600}
                         animate={{duration: 500}}
+                        easing={"bounce"}
                     >
+                        <VictoryAxis tickFormat={() => ''} />
                         <VictoryLine
                             style={{
                                 data: { stroke: "#c43a31" },
                                 parent: { border: "1px solid #ccc"}
                             }}
-                            data={this.state.data}
+                            data={this.state.data.air}
+                        />
+                        <VictoryLine
+                            style={{
+                                data: { stroke: "#c43a31" },
+                                parent: { border: "1px solid #ccc"}
+                            }}
+                            data={this.state.data.birth}
+                        />
+                        <VictoryLine
+                            style={{
+                                data: { stroke: "#c43a31" },
+                                parent: { border: "1px solid #ccc"}
+                            }}
+                            data={this.state.data.employment}
                         />
                     </VictoryChart>
                 </div>
