@@ -36,21 +36,19 @@ export class Graph extends Component {
         for (let i in data) {
             data[i].y += maxValue
         }
-        this.setState({
-            data
+        axios.post('http://localhost:5000/getprediction', {
+            data: data,
+            metric: this.state.metric
         })
-        // axios.post('/user', {
-        //     firstName: 'Fred',
-        //     lastName: 'Flintstone'
-        // })
-        // .then(function (response) {
-        //     this.setState({
-        //
-        //     })
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
+        .then((response) => {
+            // console.log(response)
+            this.setState({
+                data: response.data
+            })
+        })
+        .catch((error) => {
+            alert("Something went wrong :( ")
+        });
     };
 
     updateSelect = (e) => {
