@@ -11,7 +11,8 @@ export class Graph extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            metric: 'air'
         }
     }
 
@@ -19,7 +20,8 @@ export class Graph extends Component {
         e.preventDefault();
         canvas.clear();
         this.setState({
-            data: []
+            data: [],
+            metric: 'air'
         })
     };
 
@@ -51,47 +53,61 @@ export class Graph extends Component {
         // });
     };
 
-    render() {
-        console.log(this.state.data)
-        return (
-            <div className="chart">
-                <div className="canvas-container">
+    updateSelect = (e) => {
+        this.setState({
+            metric: e.target.value
+        })
+    };
 
-                    <CanvasDraw
-                        ref={canvasDraw => (this.saveableCanvas = canvasDraw)}
-                        brushColor={'black'}
-                        brushRadius={5}
-                        canvasWidth={400}
-                        canvasHeight={400}
-                    />
-                    <div className="button-container">
-                        <button className="savebutton"
-                                onClick={() => {
-                                    this.sendData(JSON.parse(this.saveableCanvas.getSaveData()).lines[0].points)
-                                }}
-                        >
-                            Save
-                        </button>
-                        <button className="clearbutton" onClick={(e) => {this.resetData(e, this.saveableCanvas)}}>
-                            Clear
-                        </button>
+    render() {
+        return (
+            <div>
+                <select className="custom-select" value={this.state.metric} onChange={(e => this.updateSelect(e))}>
+                    <option value="air">Air Quality</option>
+                    <option value="electricty">Electricity Demand</option>
+                    <option value="birth">Birth Rate</option>
+                    <option value="employment">Employment Rate</option>
+                </select>
+                <div className="chart">
+                    <div className="canvas-container">
+
+                        <CanvasDraw
+                            ref={canvasDraw => (this.saveableCanvas = canvasDraw)}
+                            brushColor={'black'}
+                            brushRadius={5}
+                            canvasWidth={400}
+                            canvasHeight={400}
+                        />
+                        <div className="button-container">
+                            <button className="savebutton"
+                                    onClick={() => {
+                                        this.sendData(JSON.parse(this.saveableCanvas.getSaveData()).lines[0].points)
+                                    }}
+                            >
+                                Save
+                            </button>
+                            <button className="clearbutton" onClick={(e) => {this.resetData(e, this.saveableCanvas)}}>
+                                Clear
+                            </button>
+                        </div>
                     </div>
+                    <VictoryChart
+                        theme={VictoryTheme.material}
+                        width={600}
+                        height={600}
+                        animate={{duration: 500}}
+                    >
+                        <VictoryLine
+                            style={{
+                                data: { stroke: "#c43a31" },
+                                parent: { border: "1px solid #ccc"}
+                            }}
+                            data={this.state.data}
+                        />
+                    </VictoryChart>
                 </div>
-                <VictoryChart
-                    theme={VictoryTheme.material}
-                    width={600}
-                    height={600}
-                    animate={{duration: 500}}
-                >
-                    <VictoryLine
-                        style={{
-                            data: { stroke: "#c43a31" },
-                            parent: { border: "1px solid #ccc"}
-                        }}
-                        data={this.state.data}
-                    />
-                </VictoryChart>
             </div>
+
         );
     }
 }
