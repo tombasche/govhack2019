@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { VictoryChart, VictoryTheme, VictoryLine, VictoryAxis, } from 'victory';
+import { VictoryChart, VictoryTheme, VictoryLine, VictoryAxis, VictoryTooltip } from 'victory';
 import CanvasDraw from 'react-canvas-draw';
 
 import './Graph.css';
@@ -12,6 +12,7 @@ export class Graph extends Component {
         super(props);
         this.state = {
             data: {
+                drawing: [],
                 air: [],
                 employment: [],
                 birth: []
@@ -25,6 +26,7 @@ export class Graph extends Component {
         canvas.clear();
         this.setState({
             data: {
+                drawing: [],
                 air: [],
                 employment: [],
                 birth: []
@@ -40,18 +42,18 @@ export class Graph extends Component {
             yValues.push(Math.abs(parseInt(data[i].y)));
             data[i].y *= -1
         }
-        let maxValue = Math.max(...yValues)
+        let maxValue = Math.max(...yValues);
         for (let i in data) {
-            data[i].y += maxValue
+            data[i].y += maxValue;
         }
         axios.post('http://localhost:5000/getprediction', {
             data: data,
             metric: this.state.metric
         })
         .then((response) => {
-            console.log(response)
             this.setState({
                 data: {
+                    drawing: data,
                     air: response.data["Air Quality"],
                     employment: response.data["Employment"],
                     birth: response.data["Birth"],
@@ -70,6 +72,7 @@ export class Graph extends Component {
     };
 
     render() {
+        console.log(this.state)
         return (
             <div>
                 <select className="custom-select" value={this.state.metric} onChange={(e => this.updateSelect(e))}>
@@ -105,32 +108,37 @@ export class Graph extends Component {
                         theme={VictoryTheme.material}
                         width={600}
                         height={600}
-                        animate={{duration: 500}}
-                        easing={"bounce"}
+                        animate={{duration: 1000}}
                     >
                         <VictoryAxis tickFormat={() => ''} />
                         <VictoryLine
                             style={{
-                                data: { stroke: "#c43a31" },
+                                data: { stroke: "blue" },
                                 parent: { border: "1px solid #ccc"}
                             }}
                             data={this.state.data.air}
                         />
                         <VictoryLine
                             style={{
-                                data: { stroke: "#c43a31" },
+                                data: { stroke: "red" },
                                 parent: { border: "1px solid #ccc"}
                             }}
                             data={this.state.data.birth}
                         />
                         <VictoryLine
                             style={{
-                                data: { stroke: "#c43a31" },
+                                data: { stroke: "orange" },
                                 parent: { border: "1px solid #ccc"}
                             }}
                             data={this.state.data.employment}
                         />
                     </VictoryChart>
+
+                </div>
+                <div className="legend-container">
+                    <span className="key-legend" style={{color: "blue"}}>Air Quality</span>
+                    <span className="key-legend" style={{color: "red"}}>Birth Rate</span>
+                    <span className="key-legend"  style={{color: "orange"}}>Employment</span>
                 </div>
             </div>
 
