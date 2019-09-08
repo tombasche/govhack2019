@@ -6,6 +6,86 @@ import './Graph.css';
 
 const axios = require('axios');
 
+const fakeAir = [
+    {"x": 0, "y": 0},
+    {"x": 1, "y": 0.5},
+    {"x": 2, "y": 0.6},
+    {"x": 3, "y": 0.8},
+    {"x": 4, "y": 0.9},
+    {"x": 5, "y": 1.1},
+    {"x": 6, "y": 1.5},
+    {"x": 7, "y": 1.7},
+    {"x": 8, "y": 2},
+    {"x": 9, "y": 2.2},
+    {"x": 10, "y": 2.2},
+    {"x": 11, "y": 2.2},
+    {"x": 12, "y": 2.2},
+    {"x": 13, "y": 2.4},
+    {"x": 14, "y": 2.5},
+    {"x": 15, "y": 2.7},
+    {"x": 16, "y": 2.7},
+    {"x": 17, "y": 3.0},
+    {"x": 18, "y": 3.2},
+    {"x": 19, "y": 3.3},
+    {"x": 20, "y": 3.4},
+    {"x": 21, "y": 3.5},
+];
+
+const fakeBirth = [
+    {"x": 0, "y": 0.1},
+    {"x": 1, "y": 0.6},
+    {"x": 2, "y": 0.64},
+    {"x": 3, "y": 0.87},
+    {"x": 4, "y": 1.1},
+    {"x": 5, "y": 1.15},
+    {"x": 6, "y": 1.56},
+    {"x": 7, "y": 1.78},
+    {"x": 8, "y": 2.1},
+    {"x": 9, "y": 2.3},
+    {"x": 10, "y": 2.4},
+    {"x": 11, "y": 2.5},
+    {"x": 12, "y": 2.6},
+    {"x": 13, "y": 2.6},
+    {"x": 14, "y": 2.65},
+    {"x": 15, "y": 2.77},
+    {"x": 16, "y": 2.77},
+    {"x": 17, "y": 3.07},
+    {"x": 18, "y": 3.27},
+    {"x": 19, "y": 3.37},
+    {"x": 20, "y": 3.47},
+    {"x": 21, "y": 3.57},
+];
+
+
+const fakeTraffic = [
+    {"x": 0, "y": 0.1},
+    {"x": 1, "y": 0.6},
+    {"x": 2, "y": 0.7},
+    {"x": 3, "y": 0.9},
+    {"x": 4, "y": 1.0},
+    {"x": 5, "y": 1.0},
+    {"x": 6, "y": 1.2},
+    {"x": 7, "y": 1.3},
+    {"x": 8, "y": 1.4},
+    {"x": 9, "y": 1.8},
+    {"x": 10, "y": 2.0},
+    {"x": 11, "y": 2.0},
+    {"x": 12, "y": 2.0},
+    {"x": 13, "y": 2.2},
+    {"x": 14, "y": 2.3},
+    {"x": 15, "y": 2.4},
+    {"x": 16, "y": 2.5},
+    {"x": 17, "y": 2.6},
+    {"x": 18, "y": 2.7},
+    {"x": 19, "y": 2.8},
+    {"x": 20, "y": 2.9},
+    {"x": 21, "y": 3.0},
+];
+
+
+
+
+
 export class Graph extends Component {
 
     constructor(props) {
@@ -53,10 +133,12 @@ export class Graph extends Component {
         .then((response) => {
             this.setState({
                 data: {
-                    drawing: data,
-                    air: response.data["Air Quality"],
-                    employment: response.data["Employment"],
-                    birth: response.data["Birth"],
+                    air: fakeAir,
+                    employment: fakeTraffic,
+                    birth: fakeBirth
+                    // air: response.data["Air Quality"],
+                    // employment: response.data["Employment"],
+                    // birth: response.data["Birth"],
                 }
             })
         })

@@ -2,6 +2,7 @@
   "name": "boilerplate-react-redux",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://tombasche.github.io/govhack2019",
   "dependencies": {
     "axios": "^0.19.0",
     "hoist-non-react-statics": "^3.3.0",
